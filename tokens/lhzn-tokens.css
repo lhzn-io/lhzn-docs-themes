@@ -1,0 +1,106 @@
+/*
+ * Long Horizon Observatory design tokens for documentation sites.
+ *
+ * Two modes, taken from the lhzn-blue site:
+ *   Day   ("gilded china"): eggshell paper, navy ink, cobalt accent.
+ *   Night ("chart room"):   #111111 ground, white ink, maritime yellow accent.
+ *
+ * The mode follows the attribute that Furo writes on <body> (data-theme = auto | light | dark);
+ * with "auto" or no attribute it follows prefers-color-scheme. Pages not built with Furo (the
+ * docs.lhzn.io portal) use the same attribute, so one file serves both.
+ *
+ * Contrast on the Day paper (#faf7f0): ink 13.3:1, dim 5.5:1, accent 10.5:1.
+ * The Day mark color (#b89300) is 2.7:1 and is used only for the decorative half-moon mark.
+ */
+
+@font-face {
+  font-family: "Josefin Sans";
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url("fonts/josefin-sans-latin-wght-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Josefin Sans";
+  font-style: italic;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url("fonts/josefin-sans-latin-wght-italic.woff2") format("woff2");
+}
+
+body {
+  /* Josefin Sans carries the brand on headings and labels only; it is a display face and weak for
+     long prose, so body text uses the reader's system sans-serif. Code uses the system monospace
+     face: Martian Mono (lhzn-blue's readout face) is wide enough to push ordinary code lines into
+     horizontal scrolling at desktop width. */
+  --lhzn-font-display: "Josefin Sans", "Futura", "Century Gothic", sans-serif;
+  --lhzn-font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --lhzn-font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* The masthead keeps the slate band in both modes: the wordmark exists only in yellow on dark. */
+  --lhzn-masthead-bg: linear-gradient(100deg, #2b4457 0%, #3d5668 55%, #6c818f 100%);
+  --lhzn-masthead-ink: #ffffff;
+  --lhzn-masthead-accent: #decf03;
+
+  /* Day: gilded china */
+  --lhzn-bg: #faf7f0;
+  --lhzn-panel: #f2ece0;
+  --lhzn-hover: #ebe3d2;
+  --lhzn-ink: #1c2a48;
+  --lhzn-ink-soft: #24345a;
+  --lhzn-ink-mute: #3a4866;
+  --lhzn-dim: #56657f;
+  --lhzn-faint: #7b8496;
+  --lhzn-rule: rgba(28, 42, 72, 0.16);
+  --lhzn-accent: #15338a;
+  --lhzn-accent-hi: #0c2366;
+  --lhzn-accent-line: rgba(21, 51, 138, 0.45);
+  --lhzn-mark: #b89300;
+  --lhzn-highlight: #dce4f0;
+  --lhzn-target: #f6ecc2;
+  color-scheme: light;
+}
+
+@media not print {
+  body[data-theme="dark"] {
+    /* Night: chart room */
+    --lhzn-bg: #111111;
+    --lhzn-panel: #1a1f24;
+    --lhzn-hover: #232a31;
+    --lhzn-ink: #ffffff;
+    --lhzn-ink-soft: rgba(255, 255, 255, 0.85);
+    --lhzn-ink-mute: rgba(255, 255, 255, 0.75);
+    --lhzn-dim: #9aa8b3;
+    --lhzn-faint: #6f7c86;
+    --lhzn-rule: rgba(255, 255, 255, 0.18);
+    --lhzn-accent: #decf03;
+    --lhzn-accent-hi: #fde047;
+    --lhzn-accent-line: rgba(222, 207, 3, 0.55);
+    --lhzn-mark: #decf03;
+    --lhzn-highlight: #2b4457;
+    --lhzn-target: #33300a;
+    color-scheme: dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --lhzn-bg: #111111;
+      --lhzn-panel: #1a1f24;
+      --lhzn-hover: #232a31;
+      --lhzn-ink: #ffffff;
+      --lhzn-ink-soft: rgba(255, 255, 255, 0.85);
+      --lhzn-ink-mute: rgba(255, 255, 255, 0.75);
+      --lhzn-dim: #9aa8b3;
+      --lhzn-faint: #6f7c86;
+      --lhzn-rule: rgba(255, 255, 255, 0.18);
+      --lhzn-accent: #decf03;
+      --lhzn-accent-hi: #fde047;
+      --lhzn-accent-line: rgba(222, 207, 3, 0.55);
+      --lhzn-mark: #decf03;
+      --lhzn-highlight: #2b4457;
+      --lhzn-target: #33300a;
+      color-scheme: dark;
+    }
+  }
+}

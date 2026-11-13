@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# This file builds the Sphinx adapter. The shared brand files in tokens/ are copied into the
+# wheel; adapters for other documentation tools live in their own folders with their own build.
+
+[project]
+name = "lhzn-sphinx-theme"
+dynamic = ["version"]
+description = "Long Horizon Observatory documentation theme for Sphinx, built on Furo."
+readme = "sphinx/README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Long Horizon Observatory" }]
+classifiers = [
+  "Framework :: Sphinx",
+  "Framework :: Sphinx :: Theme",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+]
+dependencies = [
+  "sphinx>=7.0",
+  # The footer template copies Furo's related-pages markup; widen this range only after checking
+  # a new Furo release against sphinx/src/lhzn_sphinx_theme/theme/lhzn/page.html.
+  "furo>=2024.8.6,<2026.0",
+]
+
+[project.urls]
+Documentation = "https://docs.lhzn.io/"
+Source = "https://github.com/lhzn-io/lhzn-docs-themes"
+
+[project.entry-points."sphinx.html_themes"]
+lhzn = "lhzn_sphinx_theme"
+
+[tool.hatch.version]
+path = "sphinx/src/lhzn_sphinx_theme/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = ["sphinx/", "tokens/", "LICENSE", "README.md"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["sphinx/src/lhzn_sphinx_theme"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"tokens" = "lhzn_sphinx_theme/tokens"

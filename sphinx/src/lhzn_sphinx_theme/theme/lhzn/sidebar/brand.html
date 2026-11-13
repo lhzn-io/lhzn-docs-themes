@@ -1,0 +1,21 @@
+{#- Organization label, half-moon mark and project name. Replaces furo/sidebar/brand.html. -#}
+{%- if theme_portal_url %}
+<a class="lhzn-org" href="{{ theme_portal_url }}">{{ theme_org_name }}</a>
+{%- endif %}
+<a class="sidebar-brand{% if logo_url or (theme_light_logo and theme_dark_logo) %} centered{% endif %}" href="{{ pathto(master_doc) }}">
+  {%- if logo_url %}
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="{{ logo_url }}" alt="{{ project }} logo"/>
+  </div>
+  {%- elif theme_light_logo and theme_dark_logo %}
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="{{ pathto('_static/' + theme_light_logo, 1) }}" alt="{{ project }} logo"/>
+    <img class="sidebar-logo only-dark" src="{{ pathto('_static/' + theme_dark_logo, 1) }}" alt="{{ project }} logo"/>
+  </div>
+  {%- else %}
+  <svg class="lhzn-mark" viewBox="0 0 39 20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M19.5 20C8.73 20 0 11.19 0 .32 0 .21 0 .11.004 0h38.992C38.998.107 39 .215 39 .323 39 11.19 30.27 20 19.5 20Z"/></svg>
+  {%- endif %}
+  {%- if not theme_sidebar_hide_name %}
+  <span class="sidebar-brand-text">{{ docstitle if docstitle else project }}</span>
+  {%- endif %}
+</a>

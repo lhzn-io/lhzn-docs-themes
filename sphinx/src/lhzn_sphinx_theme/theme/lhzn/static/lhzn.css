@@ -1,0 +1,156 @@
+/*
+ * Long Horizon Observatory styling on top of Furo. The token values live in lhzn-tokens.css;
+ * this file maps them onto Furo's CSS variables and adds the few brand details Furo has no
+ * variable for (display face on headings and labels, the half-moon mark, masthead rule).
+ * The theme links lhzn-tokens.css ahead of this file.
+ */
+
+body {
+  --font-stack: var(--lhzn-font-body);
+  --font-stack--headings: var(--lhzn-font-display);
+  --font-stack--monospace: var(--lhzn-font-mono);
+  --font-size--small: 87.5%;
+
+  --color-foreground-primary: var(--lhzn-ink-soft);
+  --color-foreground-secondary: var(--lhzn-ink-mute);
+  --color-foreground-muted: var(--lhzn-dim);
+  --color-foreground-border: var(--lhzn-faint);
+
+  --color-background-primary: var(--lhzn-bg);
+  --color-background-secondary: var(--lhzn-panel);
+  --color-background-hover: var(--lhzn-hover);
+  --color-background-hover--transparent: transparent;
+  --color-background-border: var(--lhzn-rule);
+  --color-background-item: var(--lhzn-faint);
+
+  --color-brand-primary: var(--lhzn-accent);
+  --color-brand-content: var(--lhzn-accent);
+  --color-brand-visited: var(--lhzn-accent);
+
+  --color-link: var(--lhzn-accent);
+  --color-link--hover: var(--lhzn-accent-hi);
+  --color-link--visited: var(--lhzn-accent);
+  --color-link--visited--hover: var(--lhzn-accent-hi);
+  --color-link-underline: var(--lhzn-accent-line);
+  --color-link-underline--hover: var(--lhzn-accent-hi);
+  --color-link-underline--visited: var(--lhzn-accent-line);
+  --color-link-underline--visited--hover: var(--lhzn-accent-hi);
+
+  --color-sidebar-brand-text: var(--lhzn-ink);
+  --color-sidebar-caption-text: var(--lhzn-dim);
+  --color-sidebar-link-text: var(--lhzn-ink-mute);
+  --color-sidebar-link-text--top-level: var(--lhzn-ink);
+
+  --color-header-border: var(--lhzn-accent-line);
+  --color-highlighted-background: var(--lhzn-highlight);
+  --color-highlight-on-target: var(--lhzn-target);
+  --color-inline-code-background: var(--lhzn-panel);
+  --color-code-background: var(--lhzn-panel);
+  --color-card-background: var(--lhzn-panel);
+  --color-card-border: var(--lhzn-rule);
+  --color-api-name: var(--lhzn-ink);
+  --color-api-pre-name: var(--lhzn-ink-mute);
+  --color-api-keyword: var(--lhzn-dim);
+}
+
+/* Headings: the display face, tight leading, light tracking; page titles in capitals. */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--lhzn-ink);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+h1 {
+  /* Capitals with tracking run wide: scale with the viewport so one-word titles such as
+     QUICKSTART stay on one line at phone width (375 px) instead of breaking mid-word. */
+  font-size: clamp(1.6rem, 7vw, 2.5em);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+h1 code, h1 .pre {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* Josefin Sans sits small on its em box; nudge heading sizes up so they balance the body face. */
+article h2 { font-size: 1.75em; }
+article h3 { font-size: 1.35em; }
+
+/* Sidebar: organization label, half-moon mark, project name, captions as tracked labels. */
+.lhzn-org {
+  display: block;
+  margin: 0 var(--sidebar-item-spacing-horizontal);
+  padding-top: var(--sidebar-item-spacing-vertical);
+  color: var(--lhzn-dim);
+  font-family: var(--lhzn-font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.lhzn-org:hover {
+  color: var(--lhzn-accent);
+}
+
+.sidebar-brand {
+  border-bottom: 1px solid var(--lhzn-accent-line);
+  margin-bottom: var(--sidebar-item-spacing-vertical);
+}
+
+.lhzn-mark {
+  display: block;
+  width: 2.25rem;
+  height: auto;
+  margin: 0.25rem auto 0.5rem;
+  color: var(--lhzn-mark);
+}
+
+.sidebar-brand-text {
+  font-family: var(--lhzn-font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.sidebar-tree .caption,
+.sidebar-tree :not(.caption) > .caption-text {
+  font-family: var(--lhzn-font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.sidebar-tree .current-page > .reference {
+  box-shadow: inset 3px 0 0 var(--lhzn-accent);
+}
+
+/* Mobile header: same rule as the sidebar brand. */
+.mobile-header {
+  border-bottom-color: var(--lhzn-accent-line);
+}
+
+.mobile-header .header-center a {
+  font-family: var(--lhzn-font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Code: panel background in both modes, overriding the Pygments style background. */
+.highlight,
+.highlight pre {
+  background: var(--lhzn-panel);
+}
+
+/* Footer */
+.lhzn-portal-line {
+  margin-top: 0.25rem;
+}
+
+.bottom-of-page {
+  border-top-color: var(--lhzn-accent-line);
+}
