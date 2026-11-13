@@ -26,6 +26,9 @@ Create a folder named for the tool, with its own build and README, that takes th
 ## Releases
 
 Each adapter is versioned on its own, with tags prefixed by its folder name: `sphinx-v0.1.0`.
+Pushing a `sphinx-v*` tag runs `.github/workflows/publish-sphinx.yml`, which checks the tag
+against `__version__`, builds the package, builds `sphinx/tests/site` with the wheel under
+`-W`, and publishes to PyPI through trusted publishing.
 
 ## License
 

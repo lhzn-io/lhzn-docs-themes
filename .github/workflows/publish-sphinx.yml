@@ -1,0 +1,66 @@
+name: Publish lhzn-sphinx-theme to PyPI
+
+# Pushing a tag sphinx-vX.Y.Z builds the Sphinx adapter's sdist and wheel, builds a small test site
+# with the wheel, and publishes both files to PyPI through trusted publishing (OIDC): no API token
+# is stored anywhere. PyPI must list this repository, this workflow file and the `pypi`
+# environment as a trusted publisher for lhzn-sphinx-theme. Other adapters publish on their own
+# tag prefixes.
+on:
+  push:
+    tags: ["sphinx-v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Check the tag matches the package version
+        run: |
+          version=$(sed -n 's/^__version__ = "\(.*\)"$/\1/p' sphinx/src/lhzn_sphinx_theme/__init__.py)
+          if [ "sphinx-v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match __version__ $version" >&2
+            exit 1
+          fi
+
+      - name: Build
+        run: uv build
+
+      - name: Check the distributions
+        run: uvx twine check --strict dist/*
+
+      # Build the test site from the wheel, not the checkout, so a file missing from the package
+      # (the copied tokens/ folder in particular) fails here rather than in a project's docs build.
+      - name: Build the test site with the wheel
+        run: |
+          uv run --no-project --with dist/*.whl \
+            sphinx-build -W --keep-going -b html sphinx/tests/site _site
+          for f in lhzn-tokens.css lhzn.css favicon.svg fonts/josefin-sans-latin-wght-normal.woff2; do
+            test -f "_site/_static/$f" || { echo "missing _static/$f" >&2; exit 1; }
+          done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/lhzn-sphinx-theme
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
