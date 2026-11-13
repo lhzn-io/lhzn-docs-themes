@@ -12,7 +12,7 @@ from typing import Any
 
 from sphinx.application import Sphinx
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 _HERE = Path(__file__).resolve().parent
 THEME_DIR = _HERE / "theme" / "lhzn"

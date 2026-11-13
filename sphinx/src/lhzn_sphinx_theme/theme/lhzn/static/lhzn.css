@@ -146,6 +146,12 @@ article h3 { font-size: 1.35em; }
   background: var(--lhzn-panel);
 }
 
+/* Tables: let long code spans (URLs, archive paths, file-name templates) break anywhere, so they
+   wrap inside their column instead of pushing the table into a horizontal scroll. */
+table.docutils td code {
+  overflow-wrap: anywhere;
+}
+
 /* Footer */
 .lhzn-portal-line {
   margin-top: 0.25rem;
